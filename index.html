@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word to Image Project</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        img {
+            margin: 10px;
+            width: 200px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Word to Image to Video Project</h1>
+    <p>Enter 5 words to generate images and create a video:</p>
+    <div id="word-input">
+        <input type="text" id="word1" placeholder="Word 1">
+        <input type="text" id="word2" placeholder="Word 2">
+        <input type="text" id="word3" placeholder="Word 3">
+        <input type="text" id="word4" placeholder="Word 4">
+        <input type="text" id="word5" placeholder="Word 5">
+    </div>
+    <button onclick="submitWords()">Generate Images</button>
+    <div id="images"></div>
+    <div id="video"></div>
+
+    <script>
+        function submitWords() {
+            const words = [
+                document.getElementById('word1').value,
+                document.getElementById('word2').value,
+                document.getElementById('word3').value,
+                document.getElementById('word4').value,
+                document.getElementById('word5').value
+            ];
+            
+            // Simulate displaying images for now
+            const imagesDiv = document.getElementById('images');
+            imagesDiv.innerHTML = '';
+            words.forEach((word, index) => {
+                const img = document.createElement('img');
+                img.src = `placeholder${index + 1}.png`; // Replace with real image URLs later
+                img.alt = word;
+                imagesDiv.appendChild(img);
+            });
+
+            // Simulate video download link
+            const videoDiv = document.getElementById('video');
+            videoDiv.innerHTML = '<p><a href="output_video.avi" download>Download Video</a></p>'; // Replace with actual video URL later
+        }
+    </script>
+</body>
+</html>
