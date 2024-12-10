@@ -37,29 +37,47 @@
     <div id="video"></div>
 
     <script>
-        function submitWords() {
-            const words = [
-                document.getElementById('word1').value,
-                document.getElementById('word2').value,
-                document.getElementById('word3').value,
-                document.getElementById('word4').value,
-                document.getElementById('word5').value
-            ];
-            
-            // Simulate displaying images for now
-            const imagesDiv = document.getElementById('images');
-            imagesDiv.innerHTML = '';
-            words.forEach((word, index) => {
-                const img = document.createElement('img');
-                img.src = `placeholder${index + 1}.png`; // Replace with real image URLs later
-                img.alt = word;
-                imagesDiv.appendChild(img);
-            });
+async function submitWords() {
+    // Collect user-entered words
+    const words = [
+        document.getElementById('word1').value,
+        document.getElementById('word2').value,
+        document.getElementById('word3').value,
+        document.getElementById('word4').value,
+        document.getElementById('word5').value
+    ];
 
-            // Simulate video download link
-            const videoDiv = document.getElementById('video');
-            videoDiv.innerHTML = '<p><a href="output_video.avi" download>Download Video</a></p>'; // Replace with actual video URL later
-        }
-    </script>
+    const imagesDiv = document.getElementById('images');
+    imagesDiv.innerHTML = 'Generating images...'; // Show loading message
+
+    try {
+        // Send POST request to the backend
+        const response = await fetch('http://localhost:5000/generate-images', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ words: words }),
+        });
+
+        // Process the response
+        const imageUrls = await response.json();
+        imagesDiv.innerHTML = ''; // Clear loading message
+
+        // Display the images
+        imageUrls.forEach((url, index) => {
+            const img = document.createElement('img');
+            img.src = url;
+            img.alt = `Generated for ${words[index]}`;
+            img.style.margin = "10px";
+            img.style.width = "200px";
+            imagesDiv.appendChild(img);
+        });
+    } catch (error) {
+        imagesDiv.innerHTML = 'Error generating images.';
+        console.error(error);
+    }
+}
+</script>
 </body>
 </html>
