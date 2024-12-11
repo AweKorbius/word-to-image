@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Word to Image Project</title>
     <style>
-        <link rel="stylesheet" href="styles.css">
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
@@ -40,9 +40,13 @@
         <input type="text" id="word5" placeholder="Word 5">
     </div>
     <button onclick="submitWords()">Generate Images</button>
+    
     <div id="images"></div>
-    <div id="video"></div>
-<button onclick="generateVideo()">Generate Video</button>
+    
+    <div id="status"></div>
+    
+    <button onclick="generateVideo()">Generate Video</button>
+
 
     <script>
 async function submitWords() {
