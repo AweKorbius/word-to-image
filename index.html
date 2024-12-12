@@ -5,66 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Word to Image to Video</title>
   <style>
-    /* General Styles */
-    body {
-      font-family: 'Roboto Mono', monospace;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(to right, #000428, #007bff);
-      color: #fff;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      overflow: hidden;
-    }
+    /* ... (rest of the CSS styles) */
 
-    h1 {
-      margin-bottom: 10px;
-      font-size: 2.5rem;
-      text-shadow: 0 0 5px #00fff0;
-    }
-
-    p {
-      font-size: 1rem;
-      margin-bottom: 20px;
-      color: #888;
-    }
-
-    /* Input Section */
-    #word-input {
-      margin: 20px 0;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    input {
-      width: 200px;
-      padding: 10px;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      outline: none;
-      background-color: #212529;
-      color: #fff;
-      text-align: center;
-      box-shadow: inset 0 0 5px rgba(0, 255, 255, 0.2);
-      transition: all 0.3s ease;
-    }
-
-    input:hover {
-      background-color: #333;
-      box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.4);
-    }
-
-    /* Buttons */
+    /* Button Styles */
     button {
       background-color: transparent;
-      color: #00fff0;
+      color: #00fff0; /* Neon blue */
       border: 2px solid #00fff0;
       border-radius: 10px;
       padding: 10px 20px;
@@ -72,83 +18,36 @@
       cursor: pointer;
       transition: all 0.3s ease;
       margin: 10px;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); /* Neon glow effect */
     }
 
     button:hover {
       background-color: #007bff;
-      transform: scale(1.03);
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
     }
 
-    /* Images Section */
+    /* Input Field Styles */
+    input {
+      /* ... (previous input styles) */
+      margin: 5px; /* Add margin for spacing */
+    }
+
+    /* Image Display Styles */
     #images {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 15px;
       margin-top: 20px;
     }
 
     img {
-      width: 200px;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
-      transition: transform 0.3s ease;
-    }
-
-    img:hover {
-      transform: scale(1.05);
-    }
-
-    /* Status Message */
-    #status {
-      margin-top: 20px;
-      font-size: 18px;
-      font-weight: bold;
-      color: #00fff0;
-      text-shadow: 0 0 5px #00fff0;
-    }
-
-    /* Geometric Shapes */
-    .shape {
-      position: absolute;
-      z-index: -1;
-      opacity: 0.5;
-    }
-
-    .circle {
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      background: #00fff0;
-      top: 100px;
-      left: 50px;
-    }
-
-    .triangle {
-      width: 0;
-      height: 0;
-      border-left: 100px solid transparent;
-      border-right: 100px solid transparent;
-      border-bottom: 150px solid #00fff0;
-      bottom: 50px;
-      right: 100px;
-    }
-
-    .square {
-      width: 150px;
-      height: 150px;
-      background: #00fff0;
-      top: 300px;
-      right: 50px;
+      /* ... (previous image styles) */
+      margin: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="shape circle"></div>
-  <div class="shape triangle"></div>
-  <div class="shape square"></div>
-
   <h1>Word to Image to Video Project</h1>
   <p>Enter up to 5 words to generate images and create a video:</p>
 
@@ -169,11 +68,89 @@
 
   <script>
     async function submitWords() {
-      // ... (same as before)
+      const words = [
+        document.getElementById('word1').value,
+        document.getElementById('word2').value,
+        document.getElementById('word3').value,
+        document.getElementById('word4').value,
+        document.getElementById('word5').value
+      ];
+
+      const imagesDiv = document.getElementById('images');
+      const statusDiv = document.getElementById('status');
+      imagesDiv.innerHTML = 'Generating images...';
+      statusDiv.innerHTML = '';
+
+      try {
+        const response = await fetch('http://localhost:5000/generate-images', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ words }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Server error: ${response.status}`);
+        }
+
+        const imageUrls = await response.json();
+        imagesDiv.innerHTML = '';
+
+        imageUrls.forEach((url, index) => {
+          const img = document.createElement('img');
+          img.src = url;
+          img.alt = `Generated for ${words[index]}`;
+          img.style.margin = "10px";
+          img.style.width = "200px";
+          imagesDiv.appendChild(img);
+        });
+
+        statusDiv.innerHTML = 'Images generated successfully!';
+      } catch (error) {
+        imagesDiv.innerHTML = '';
+        statusDiv.innerHTML = `Error generating images: ${error.message}`;
+        console.error(error);
+      }
     }
 
     async function generateVideo() {
-      // ... (same as before)
+      const statusDiv = document.getElementById('status');
+      const imgElements = document.querySelectorAll('#images img');
+      const imageUrls = Array.from(imgElements).map(img => img.src);
+
+      if (imageUrls.length === 0) {
+        statusDiv.innerHTML = 'No images available to generate a video.';
+        return;
+      }
+
+      statusDiv.innerHTML = 'Generating video...';
+
+      try {
+        const response = await fetch('http://localhost:5000/generate-video', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ imageUrls }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Server error: ${response.status}`);
+        }
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'output-video.mp4';
+        link.click();
+
+        statusDiv.innerHTML = 'Video generated successfully!';
+      } catch (error) {
+        statusDiv.innerHTML = `Error generating video: ${error.message}`;
+        console.error(error);
+      }
     }
   </script>
 </body>
