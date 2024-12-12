@@ -1,37 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Link External CSS -->
     <link rel="stylesheet" href="styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Word to Image Project</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            text-align: center;
-        }
-        input, button {
-            margin: 10px;
-            padding: 10px;
-            font-size: 16px;
-        }
-        img {
-            margin: 10px;
-            width: 200px;
-            height: auto;
-        }
-        #status {
-    color: #333;
-    font-size: 16px;
-    margin-top: 10px;
-    text-align: center;
-        }
-    </style>
+    <title>Word to Image to Video</title>
+    <!-- Add Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Word to Image to Video Project</h1>
-    <p>Enter 5 words to generate images and create a video:</p>
+    <!-- Page Header -->
+    <header>
+        <h1>Word to Image to Video Project</h1>
+        <p>Enter up to 5 words to generate images and create a video:</p>
+    </header>
+
+    <!-- Input Section -->
     <div id="word-input">
         <input type="text" id="word1" placeholder="Word 1">
         <input type="text" id="word2" placeholder="Word 2">
@@ -39,57 +24,106 @@
         <input type="text" id="word4" placeholder="Word 4">
         <input type="text" id="word5" placeholder="Word 5">
     </div>
+
+    <!-- Generate Images Button -->
     <button onclick="submitWords()">Generate Images</button>
-    
+
+    <!-- Images Display Section -->
     <div id="images"></div>
-    
+
+    <!-- Status Message Section -->
     <div id="status"></div>
-    
+
+    <!-- Generate Video Button -->
     <button onclick="generateVideo()">Generate Video</button>
 
-
+    <!-- JavaScript File -->
     <script>
-async function submitWords() {
-    // Collect user-entered words
-    const words = [
-        document.getElementById('word1').value,
-        document.getElementById('word2').value,
-        document.getElementById('word3').value,
-        document.getElementById('word4').value,
-        document.getElementById('word5').value
-    ];
+        async function submitWords() {
+            const words = [
+                document.getElementById('word1').value,
+                document.getElementById('word2').value,
+                document.getElementById('word3').value,
+                document.getElementById('word4').value,
+                document.getElementById('word5').value
+            ];
 
-    const imagesDiv = document.getElementById('images');
-    imagesDiv.innerHTML = 'Generating images...'; // Show loading message
+            const imagesDiv = document.getElementById('images');
+            const statusDiv = document.getElementById('status');
+            imagesDiv.innerHTML = 'Generating images...';
+            statusDiv.innerHTML = ''; // Clear previous messages
 
-    try {
-        // Send POST request to the backend
-        const response = await fetch('http://localhost:5000/generate-images', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ words: words }),
-        });
+            try {
+                const response = await fetch('http://localhost:5000/generate-images', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ words: words }),
+                });
 
-        // Process the response
-        const imageUrls = await response.json();
-        imagesDiv.innerHTML = ''; // Clear loading message
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
 
-        // Display the images
-        imageUrls.forEach((url, index) => {
-            const img = document.createElement('img');
-            img.src = url;
-            img.alt = `Generated for ${words[index]}`;
-            img.style.margin = "10px";
-            img.style.width = "200px";
-            imagesDiv.appendChild(img);
-        });
-    } catch (error) {
-        imagesDiv.innerHTML = 'Error generating images.';
-        console.error(error);
-    }
-}
-</script>
+                const imageUrls = await response.json();
+                imagesDiv.innerHTML = ''; // Clear loading message
+
+                imageUrls.forEach((url, index) => {
+                    const img = document.createElement('img');
+                    img.src = url;
+                    img.alt = `Generated for ${words[index]}`;
+                    img.style.margin = "10px";
+                    img.style.width = "200px";
+                    imagesDiv.appendChild(img);
+                });
+
+                statusDiv.innerHTML = 'Images generated successfully!';
+            } catch (error) {
+                imagesDiv.innerHTML = '';
+                statusDiv.innerHTML = `Error generating images: ${error.message}`;
+                console.error(error);
+            }
+        }
+
+        async function generateVideo() {
+            const statusDiv = document.getElementById('status');
+            const imgElements = document.querySelectorAll('#images img');
+            const imageUrls = Array.from(imgElements).map(img => img.src);
+
+            if (imageUrls.length === 0) {
+                statusDiv.innerHTML = 'No images available to generate a video.';
+                return;
+            }
+
+            statusDiv.innerHTML = 'Generating video...';
+
+            try {
+                const response = await fetch('http://localhost:5000/generate-video', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ imageUrls }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'output-video.mp4';
+                link.click();
+
+                statusDiv.innerHTML = 'Video generated successfully!';
+            } catch (error) {
+                statusDiv.innerHTML = `Error generating video: ${error.message}`;
+                console.error(error);
+            }
+        }
+    </script>
 </body>
 </html>
