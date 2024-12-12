@@ -1,55 +1,68 @@
-/* General Styles */
+/* Futuristic styles inspired by a high-tech city */
+
+/* General body styles */
 body {
-    font-family: 'Roboto', Arial, sans-serif; /* Use a modern font */
     margin: 0;
     padding: 0;
-    background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
-    color: #fff;
-    text-align: center;
+    font-family: 'Roboto Mono', monospace;
+    background: linear-gradient(to bottom, #0d0d0d, #1a1a1a);
+    color: #d3d3d3;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    overflow: hidden;
 }
 
-/* Container for Input and Buttons */
-#word-input {
-    margin: 20px 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-}
-
-/* Input Fields */
-input {
-    width: 200px;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    outline: none;
-    background-color: #f7f7f7;
-    color: #333;
-    text-align: center;
+/* General styles for the status message */
+#status {
+    color: #7a7a7a;          /* Subtle text color */
+    font-size: 18px;         /* Slightly larger font */
+    margin-top: 20px;        /* Space above the message */
+    text-align: center;      /* Center alignment */
+    font-weight: bold;       /* Bold text for emphasis */
+    text-shadow: 0 0 5px #00ffff; /* Glow effect */
 }
 
 /* Buttons */
 button {
-    background-color: #ff7a59;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    background-color: #333333; /* Dark button background */
+    color: #00ffff;            /* Futuristic glowing text */
+    border: 1px solid #00ffff; /* Glowing border */
+    padding: 12px 24px;        /* Comfortable padding */
+    font-size: 16px;           /* Readable font size */
+    cursor: pointer;           /* Pointer cursor on hover */
+    border-radius: 8px;        /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); /* Neon glow */
+    transition: all 0.3s ease; /* Smooth transitions */
 }
 
 button:hover {
-    background-color: #ff502b;
-    transform: scale(1.05);
+    background-color: #00ffff; /* Invert background and text on hover */
+    color: #333333;
+    transform: scale(1.1);     /* Slight zoom */
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8); /* Brighter glow */
+}
+
+/* Input fields */
+input {
+    padding: 12px;
+    font-size: 16px;
+    margin: 5px;
+    border: none;                /* No border for sleek look */
+    border-radius: 8px;          /* Rounded corners */
+    background-color: #2a2a2a;   /* Dark background */
+    color: #00ffff;              /* Neon text */
+    text-align: center;
+    box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.4); /* Glow inside */
+    outline: none;               /* Remove focus border */
+    transition: all 0.3s ease;   /* Smooth focus/hover effect */
+}
+
+input:hover, input:focus {
+    background-color: #333333;   /* Darker background on hover/focus */
+    box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.7); /* Brighter glow */
 }
 
 /* Images Section */
@@ -57,42 +70,19 @@ button:hover {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;
+    gap: 15px;           /* Space between images */
     margin-top: 20px;
 }
 
 img {
-    width: 200px;
+    width: 220px;
     height: auto;
-    border: 2px solid #fff;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
+    border-radius: 8px; /* Subtle rounded corners */
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5); /* Futuristic glow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 img:hover {
-    transform: scale(1.05);
-}
-
-/* Status Message */
-#status {
-    margin-top: 20px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #ffd700;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    input {
-        width: 100%;
-    }
-
-    button {
-        width: 100%;
-    }
-
-    img {
-        width: 100%;
-    }
+    transform: scale(1.1); /* Slight zoom on hover */
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.8); /* Stronger glow */
 }
