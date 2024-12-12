@@ -68,90 +68,90 @@
 
   <script>
     async function submitWords() {
-      const words = [
-        document.getElementById('word1').value,
-        document.getElementById('word2').value,
-        document.getElementById('word3').value,
-        document.getElementById('word4').value,
-        document.getElementById('word5').value
-      ];
+  const words = [
+    document.getElementById('word1').value,
+    document.getElementById('word2').value,
+    document.getElementById('word3').value,
+    document.getElementById('word4').value,
+    document.getElementById('word5').value
+  ];
 
-      const imagesDiv = document.getElementById('images');
-      const statusDiv = document.getElementById('status');
-      imagesDiv.innerHTML = 'Generating images...';
-      statusDiv.innerHTML = '';
+  const imagesDiv = document.getElementById('images');
+  const statusDiv = document.getElementById('status');
 
-      try {
-        const response = await fetch('http://localhost:5000/generate-images', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ words }),
-        });
+  statusDiv.innerHTML = 'Generating images, please wait...';
 
-        if (!response.ok) {
-          throw new Error(`Server error: ${response.status}`);
-        }
+  try {
+    const response = await fetch('http://localhost:5000/generate-images', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ words }),
+    });
 
-        const imageUrls = await response.json();
-        imagesDiv.innerHTML = '';
-
-        imageUrls.forEach((url, index) => {
-          const img = document.createElement('img');
-          img.src = url;
-          img.alt = `Generated for ${words[index]}`;
-          img.style.margin = "10px";
-          img.style.width = "200px";
-          imagesDiv.appendChild(img);
-        });
-
-        statusDiv.innerHTML = 'Images generated successfully!';
-      } catch (error) {
-        imagesDiv.innerHTML = '';
-        statusDiv.innerHTML = `Error generating images: ${error.message}`;
-        console.error(error);
-      }
+    if (!response.ok) {
+      throw new Error(`Server error: ${response.status}`);
     }
 
-    async function generateVideo() {
-      const statusDiv = document.getElementById('status');
-      const imgElements = document.querySelectorAll('#images img');
-      const imageUrls = Array.from(imgElements).map(img => img.src);
+    const imageUrls = await response.json();
+    imagesDiv.innerHTML = '';
 
-      if (imageUrls.length === 0) {
-        statusDiv.innerHTML = 'No images available to generate a video.';
-        return;
-      }
+    imageUrls.forEach((url, index) => {
+      const img = document.createElement('img');
+      img.src = url;
+      img.alt = `Generated for ${words[index]}`;
+      img.style.margin = "10px";
+      img.style.width = "200px";
+      imagesDiv.appendChild(img);
+    });
 
-      statusDiv.innerHTML = 'Generating video...';
+    statusDiv.innerHTML = 'Images generated successfully!';
+  } catch (error) {
+    imagesDiv.innerHTML = '';
+    statusDiv.innerHTML = `Error generating images: ${error.message}`;
+    console.error(error);
+  }
+}
 
-      try {
-        const response = await fetch('http://localhost:5000/generate-video', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ imageUrls }),
-        });
+async function generateVideo() {
+  const statusDiv = document.getElementById('status');
+  const imgElements = document.querySelectorAll('#images img');
+  const imageUrls = Array.from(imgElements).map(img => img.src);
 
-        if (!response.ok) {
-          throw new Error(`Server error: ${response.status}`);
-        }
+  if (imageUrls.length === 0) {
+    statusDiv.innerHTML = 'No images available to generate a video.';
+    return;
+  }
 
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'output-video.mp4';
-        link.click();
+  statusDiv.innerHTML = 'Generating video, please wait...';
 
-        statusDiv.innerHTML = 'Video generated successfully!';
-      } catch (error) {
-        statusDiv.innerHTML = `Error generating video: ${error.message}`;
-        console.error(error);
-      }
+  try {
+    const response = await fetch('http://localhost:5000/generate-video', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ imageUrls }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Server error: ${response.status}`);
     }
+
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'output-video.mp4';
+    link.click();
+
+    statusDiv.innerHTML = 'Video generated successfully!';
+  } catch (error) {
+    statusDiv.innerHTML = `Error generating video: ${error.message}`;
+    console.error(error);
+  }
+}
   </script>
 </body>
 </html>
