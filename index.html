@@ -7,103 +7,60 @@
   <style>
     /* General Styles */
     body {
-      font-family: 'Roboto Mono', monospace; /* Use a futuristic font */
+      font-family: 'Roboto Mono', monospace;
       margin: 0;
       padding: 0;
-      background: linear-gradient(to right, #000428, #007bff); /* Darker gradient with vibrant blue */
-      color: #fff; /* White text */
+      background: linear-gradient(to right, #000428, #007bff);
+      color: #fff;
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      overflow: hidden; /* Prevent content overflow on smaller screens */
+      overflow: hidden;
     }
 
-    h1 {
-      margin-bottom: 10px;
-      font-size: 2.5rem;
-      text-shadow: 0 0 5px #00fff0; /* Subtle text shadow for depth */
+    /* ... other styles ... */
+
+    /* Add geometric shapes */
+    .shape {
+      position: absolute;
+      z-index: -1;
+      opacity: 0.5;
     }
 
-    p {
-      font-size: 1rem;
-      margin-bottom: 20px;
-      color: #888; /* Dimmer text for better readability */
+    .circle {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: #00fff0; /* Neon blue */
+      top: 100px;
+      left: 50px;
     }
 
-    /* Input Section */
-    #word-input {
-      margin: 20px 0;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
+    .triangle {
+      width: 0;
+      height: 0;
+      border-left: 100px solid transparent;
+      border-right: 100px solid transparent;
+      border-bottom: 150px solid #00fff0; /* Neon blue */
+      bottom: 50px;
+      right: 100px;
     }
 
-    input {
-      width: 200px;
-      padding: 10px;
-      border: none;
-      border-radius: 10px; /* Rounded corners for a sleeker look */
-      font-size: 16px;
-      outline: none;
-      background-color: #212529; /* Darker input background */
-      color: #fff;
-      text-align: center;
-      box-shadow: inset 0 0 5px rgba(0, 255, 255, 0.2); /* Inner glow for a futuristic feel */
-      transition: all 0.3s ease;
+    .square {
+      width: 150px;
+      height: 150px;
+      background: #00fff0; /* Neon blue */
+      top: 300px;
+      right: 50px;
     }
-
-    input:hover {
-      background-color: #333; /* Darken input on hover */
-      box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.4); /* Increase glow on hover */
-    }
-
-    /* Buttons */
-    button {
-      background-color: transparent; /* Transparent button for a minimalist look */
-      color: #00fff0; /* Neon blue text */
-      border: 2px solid #00fff0; /* Neon blue border */
-      border-radius: 10px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin: 10px; /* Add some space between buttons */
-    }
-
-    button:hover {
-      background-color: #007bff; /* Button turns blue on hover */
-      transform: scale(1.03); /* Slight zoom on hover */
-    }
-
-    /* Images Section */
-    #images {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    img {
-      width: 200px;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4); /* Maintain shadow */
-      transition: transform 0.3s ease;
-    }
-
-    img:hover {
-      transform: scale(1.05);
-    }
-
-    /* Status Message */
-    #status {
-      margin-top: 20px;
-      font-size: 18px;
-      font-weight: bold;
-      color: #00fff0; /* Neon blue text */
-      text-shadow: 0 0 5px
+  </style>
+</head>
+<body>
+  <div class="shape circle"></div>
+  <div class="shape triangle"></div>
+  <div class="shape square"></div>
+</body>
+</html>
