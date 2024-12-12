@@ -1,32 +1,98 @@
-/* General styles for the status message */
-#status {
-    color: #333;              /* Text color */
-    font-size: 16px;          /* Font size */
-    margin-top: 20px;         /* Space above the message */
-    text-align: center;       /* Center alignment */
-    font-weight: bold;        /* Bold text */
+/* General Styles */
+body {
+    font-family: 'Roboto', Arial, sans-serif; /* Use a modern font */
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
+    color: #fff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
 }
 
-/* Optional: Style buttons for a more polished look */
+/* Container for Input and Buttons */
+#word-input {
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Input Fields */
+input {
+    width: 200px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    background-color: #f7f7f7;
+    color: #333;
+    text-align: center;
+}
+
+/* Buttons */
 button {
-    background-color: #007BFF;  /* Button color */
-    color: white;               /* Text color */
-    border: none;               /* Remove border */
-    padding: 10px 20px;         /* Padding inside the button */
-    font-size: 16px;            /* Font size */
-    cursor: pointer;            /* Pointer cursor on hover */
-    border-radius: 5px;         /* Rounded corners */
+    background-color: #ff7a59;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 button:hover {
-    background-color: #0056b3;  /* Darker shade on hover */
+    background-color: #ff502b;
+    transform: scale(1.05);
 }
 
-/* Optional: Style input fields for better appearance */
-input {
-    padding: 10px;
-    font-size: 16px;
-    margin: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+/* Images Section */
+#images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+img {
+    width: 200px;
+    height: auto;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+img:hover {
+    transform: scale(1.05);
+}
+
+/* Status Message */
+#status {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffd700;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    input {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    img {
+        width: 100%;
+    }
 }
