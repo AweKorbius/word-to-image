@@ -4,13 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Summative</title>
+  <link rel="stylesheet" href="styles.css">
   <style>
     body {
       font-family: 'Roboto Mono', monospace;
       margin: 0;
       padding: 0;
-      background: linear-gradient(to right, #000428, #007bff);
-      color: #fff;
+      background: linear-gradient(to bottom, #0d0d0d, #1a1a1a);
+      color: #d3d3d3;
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -22,17 +23,17 @@
 
     h1 {
       margin-bottom: 10px;
-      font-size: 2.5rem;
-      text-shadow: 0 0 5px #00fff0;
+      font-size: 2.8rem;
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
     }
 
     p {
-      font-size: 1rem;
+      font-size: 1.2rem;
       margin-bottom: 20px;
-      color: #888;
+      color: #7a7a7a;
     }
 
-    /* Input Section */
     #word-input {
       margin: 20px 0;
       display: flex;
@@ -42,45 +43,43 @@
     }
 
     input {
-      width: 200px;
-      padding: 10px;
+      width: 250px;
+      padding: 12px;
       border: none;
-      border-radius: 10px;
-      font-size: 16px;
+      border-radius: 8px;
+      font-size: 1rem;
       outline: none;
-      background-color: #212529;
-      color: #fff;
+      background-color: #2a2a2a;
+      color: #00ffff;
       text-align: center;
-      box-shadow: inset 0 0 5px rgba(0, 255, 255, 0.2);
-      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+      transition: transform 0.3s, box-shadow 0.3s;
     }
 
-    input:hover {
-      background-color: #333;
-      box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.4);
+    input:focus, input:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
     }
 
-    /* Buttons */
     button {
-      background-color: transparent;
-      color: #00fff0;
-      border: 2px solid #00fff0;
-      border-radius: 10px;
+      background-color: #333333;
+      color: #00ffff;
+      border: 1px solid #00ffff;
+      border-radius: 5px;
       padding: 10px 20px;
-      font-size: 16px;
+      font-size: 1rem;
       cursor: pointer;
-      transition: all 0.3s ease;
       margin: 10px;
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); /* Neon glow effect */
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+      transition: transform 0.3s, background-color 0.3s;
     }
 
     button:hover {
-      background-color: #007bff;
-      transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+      background-color: #00ffff;
+      color: #333333;
+      transform: scale(1.1);
     }
 
-    /* Images Section */
     #images {
       display: flex;
       flex-wrap: wrap;
@@ -90,16 +89,38 @@
     }
 
     img {
-      width: 200px;
+      width: 220px;
       height: auto;
       border-radius: 10px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
-      transition: transform 0.3s ease;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+      transition: transform 0.3s, box-shadow 0.3s;
     }
 
     img:hover {
-      transform: scale(1.05);
+      transform: scale(1.1);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.8);
     }
 
-    /* Status Message */
     #status {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #7a7a7a;
+    }
+  </style>
+</head>
+<body>
+  <h1>AI Summative</h1>
+  <p>Generate AI-powered content in seconds!</p>
+
+  <div id="word-input">
+    <input type="text" id="word" placeholder="Enter a word or phrase">
+    <button onclick="generateImages()">Generate Images</button>
+  </div>
+
+  <div id="images"></div>
+
+  <div id="status">Waiting for input...</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
