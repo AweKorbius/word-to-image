@@ -1,22 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Link External CSS -->
-    <link rel="stylesheet" href="styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Word to Image to Video</title>
-    <!-- Add Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Inline CSS for the whole website -->
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
+            color: #fff;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        /* Input Section */
+        #word-input {
+            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        input {
+            width: 200px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+            background-color: #f7f7f7;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Buttons */
+        button {
+            background-color: #ff7a59;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ff502b;
+            transform: scale(1.05);
+        }
+
+        /* Images Section */
+        #images {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        img {
+            width: 200px;
+            height: auto;
+            border: 2px solid white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Status Message */
+        #status {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            input {
+                width: 100%;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            img {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Page Header -->
-    <header>
-        <h1>Word to Image to Video Project</h1>
-        <p>Enter up to 5 words to generate images and create a video:</p>
-    </header>
+    <h1>Word to Image to Video Project</h1>
+    <p>Enter up to 5 words to generate images and create a video:</p>
 
-    <!-- Input Section -->
     <div id="word-input">
         <input type="text" id="word1" placeholder="Word 1">
         <input type="text" id="word2" placeholder="Word 2">
@@ -25,19 +127,13 @@
         <input type="text" id="word5" placeholder="Word 5">
     </div>
 
-    <!-- Generate Images Button -->
     <button onclick="submitWords()">Generate Images</button>
 
-    <!-- Images Display Section -->
     <div id="images"></div>
-
-    <!-- Status Message Section -->
     <div id="status"></div>
 
-    <!-- Generate Video Button -->
     <button onclick="generateVideo()">Generate Video</button>
 
-    <!-- JavaScript File -->
     <script>
         async function submitWords() {
             const words = [
@@ -51,7 +147,7 @@
             const imagesDiv = document.getElementById('images');
             const statusDiv = document.getElementById('status');
             imagesDiv.innerHTML = 'Generating images...';
-            statusDiv.innerHTML = ''; // Clear previous messages
+            statusDiv.innerHTML = '';
 
             try {
                 const response = await fetch('http://localhost:5000/generate-images', {
@@ -59,7 +155,7 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ words: words }),
+                    body: JSON.stringify({ words }),
                 });
 
                 if (!response.ok) {
@@ -67,7 +163,7 @@
                 }
 
                 const imageUrls = await response.json();
-                imagesDiv.innerHTML = ''; // Clear loading message
+                imagesDiv.innerHTML = '';
 
                 imageUrls.forEach((url, index) => {
                     const img = document.createElement('img');
